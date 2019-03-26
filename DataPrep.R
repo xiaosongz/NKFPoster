@@ -43,3 +43,10 @@ data <-  out %>%
   rename(var_old = var,
          var = var_a)
 
+# define function to extract n and prop from the combined string ----------
+
+extract_prop <- function(combined) {
+  prop_text = gsub(".*\\((.*?)\\)","\\1", x = combined)
+  prop = as.numeric(prop_text)
+  return(prop)
+}
