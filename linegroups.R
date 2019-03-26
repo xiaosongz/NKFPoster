@@ -40,7 +40,9 @@ p + geom_line(size = 2)+
 ggsave(height = 6,
        width = 6*1.6,
        filename = "plots/CKDTrendByAgegroup.pdf")
-
+ggsave(height = 6,
+       width = 6*1.6,
+       filename = "plots/CKDTrendByAgegroup.png")
 # ED visits trend by agegroups ----------------------------------------------
 
 
@@ -70,7 +72,9 @@ ggsave(height = 6,
        width = 6*1.6,
        filename = "plots/EDTrendByAgegroup.pdf")
 
-
+ggsave(height = 6,
+       width = 6*1.61,
+       filename = "plots/EDTrendByAgegroup.png")
 # ED visits by Age and CKD status -----------------------------------------
 
 
@@ -107,3 +111,6 @@ p + geom_line(size = 2)+
 ggsave(height = 6,
        width = 6*1.61,
        filename = "plots/EDTrendByAge_CKD.pdf")
+ggsave(height = 6,
+       width = 6*1.61,
+       filename = "plots/EDTrendByAge_CKD.png")
