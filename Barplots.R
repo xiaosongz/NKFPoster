@@ -13,14 +13,13 @@ library(ggsci)
 
 # define comos ------------------------------------------------------------
 
-comos <- c("DM",
-           "HTN",
+comos <- c("ANEMIA",
            "CHF",
-           "CVD",
-           "AKI",
+           "DM",
+           "HTN",
            "CVD_HOSP",
-           "GI",
-           "ANEMIA")
+           "INF_HOSP"
+           )
 # data reshape for ggplot -------------------------------------------------
 
 
@@ -34,7 +33,7 @@ plot_data <- data %>% filter(year == 2013) %>%
        pedsNoCKD_prop = extract_prop(pedsNoCKD),
        pedsCKD_prop = extract_prop(pedsCKD)) %>%
   select(var,ends_with("_prop")) %>%
-  filter(var %in% comos) %>%
+  filter(var %in% comos)
   write_csv(path = "data/results/comos2013.csv")
 
 
@@ -55,21 +54,25 @@ temp_df <-
   filter(group == "adultNoCKD_prop") %>%
   arrange(prop)
 the_order <- temp_df$var
+the_order %>% print()
 # plot
 p <-
   plotting_df %>%
   ggplot(aes(x = var, y = prop, group = group, fill = group)) +
   geom_bar(stat = "identity", width = 0.75) +
   coord_flip() +
-  scale_x_discrete(limits = the_order) +
+  scale_x_discrete(limits = rev(comos)) +
   # another trick!
-  scale_y_continuous(breaks = seq(-100, 100, 10),
+  scale_y_continuous(limits = c(-65,65),#set the lower and upper limit for x axis(flipped)
+                     breaks = seq(-100, 100, 10),
                      labels = abs(seq(-100, 100, 10))) +
-  labs(x = "Comobidity", y = "% Diagnosis", title = "Back-to-back bar chart")+
+  labs(x = "Comobidity", y = "% Diagnosis", title = "Adult comobidity diagnosis by CKD status")+
   ggthemes::theme_economist()+
-  ggsci::scale_fill_jama()+
+  ggsci::scale_fill_jama(labels = c("No-CKD","CKD"))+
+  #scale_fill_discrete(labels = c("A","B"))+
   theme(legend.position = "top",
         legend.title = element_blank(),
+        legend.text = element_text(),
         plot.title = element_text(hjust = 0.5),
         #panel.background = element_rect(fill =  "grey90")
   ) +
@@ -89,7 +92,9 @@ ggsave(height = 6,
        width = 6*1.6,
        filename = "plots/adultCOMObyCKD.pdf")
 
-
+ggsave(height = 6,
+       width = 6*1.6,
+       filename = "plots/adultCOMObyCKD.png")
 # make barplot peds ------------------------------------------------------------
 plotting_df <-
   plot_data %>%
@@ -103,22 +108,25 @@ temp_df <-
   plotting_df %>%
   filter(group == "pedsNoCKD_prop") %>%
   arrange(prop)
-the_order <- temp_df$var
+#the_order <- temp_df$var
+#print(the_order)
 # plot
 p <-
   plotting_df %>%
   ggplot(aes(x = var, y = prop, group = group, fill = group)) +
   geom_bar(stat = "identity", width = 0.75) +
   coord_flip() +
-  scale_x_discrete(limits = the_order) +
+  scale_x_discrete(limits = rev(comos)) +
   # another trick!
-  scale_y_continuous(breaks = seq(-100, 100, 10),
+  scale_y_continuous(limits = c(-65,65),#set the lower and upper limit for x axis(flipped)
+                     breaks = seq(-100, 100, 10),
                      labels = abs(seq(-100, 100, 10))) +
-  labs(x = "Comobidity", y = "% Diagnosis", title = "Back-to-back bar chart")+
-  ggthemes::theme_economist()+
-  ggsci::scale_fill_jama()+
+  labs(x = "Comobidity", y = "% Diagnosis", title = "Pediatric comobidity diagnosis by CKD status") +
+  ggthemes::theme_economist() +
+  ggsci::scale_fill_jama(labels = c("No-CKD","CKD")) +
   theme(legend.position = "top",
         legend.title = element_blank(),
+        #legend.text = element_blank(),
         plot.title = element_text(hjust = 0.5),
         #panel.background = element_rect(fill =  "grey90")
   ) +
@@ -137,3 +145,6 @@ print(p)
 ggsave(height = 6,
        width = 6*1.6,
        filename = "plots/pedsCOMObyCKD.pdf")
+ggsave(height = 6,
+       width = 6*1.6,
+       filename = "plots/pedsCOMObyCKD.png")
