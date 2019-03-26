@@ -77,9 +77,9 @@ ggsave(height = 6,
 draw <- data %>% select(year,var,Overall,peds,adult,
                         pedsNoCKD,adultNoCKD,pedsCKD,adultCKD) %>%
   filter(var == "ED") %>%
-  mutate(overall_prop = extract_prop(Overall),
-         peds_prop = extract_prop(peds),
-         adult_prop = extract_prop(adult),
+  mutate(#overall_prop = extract_prop(Overall),
+         #peds_prop = extract_prop(peds),
+         #adult_prop = extract_prop(adult),
          adultNoCKD_prop = extract_prop(adultNoCKD),
          adultCKD_prop = extract_prop(adultCKD),
          pedsNoCKD_prop = extract_prop(pedsNoCKD),
@@ -105,5 +105,5 @@ p + geom_line(size = 2)+
   scale_fill_discrete(name = "Patient group")
 
 ggsave(height = 6,
-       width = 6*1.6,
+       width = 6*1.61,
        filename = "plots/EDTrendByAge_CKD.pdf")
