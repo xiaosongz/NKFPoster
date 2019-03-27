@@ -68,7 +68,7 @@ p <-
                      labels = abs(seq(-100, 100, 10))) +
   labs(x = "Comobidity", y = "% Diagnosis", title = "Adult comobidity diagnosis by CKD status")+
   ggthemes::theme_economist()+
-  ggsci::scale_fill_jama(labels = c("No-CKD","CKD"))+
+  ggsci::scale_fill_jama(labels = c("CKD","No-CKD"))+
   #scale_fill_discrete(labels = c("A","B"))+
   theme(legend.position = "top",
         legend.title = element_blank(),
@@ -123,7 +123,7 @@ p <-
                      labels = abs(seq(-100, 100, 10))) +
   labs(x = "Comobidity", y = "% Diagnosis", title = "Pediatric comobidity diagnosis by CKD status") +
   ggthemes::theme_economist() +
-  ggsci::scale_fill_jama(labels = c("No-CKD","CKD")) +
+  ggsci::scale_fill_jama(labels = c("CKD","No-CKD")) +
   theme(legend.position = "top",
         legend.title = element_blank(),
         #legend.text = element_blank(),
