@@ -30,7 +30,7 @@ p <- ggplot(data = draw,
                 color = key))
 p + geom_line(size = 2)+
   ggthemes::theme_economist()+
-  ggsci::scale_fill_jama()+
+  ggsci::scale_fill_jama(labels = c("Adults","Overall", "Pediatrics"))+
   ggsci::scale_color_jama()+
   ylab(label = "Prevlence (%)")+
   ggtitle("CKD Diagnosis Trends by Patients' Age Group")+
