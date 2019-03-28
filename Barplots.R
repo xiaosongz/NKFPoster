@@ -11,15 +11,17 @@ library(ggplot2)
 library(ggthemes)
 library(ggsci)
 
-# define comos ------------------------------------------------------------
+# define comos and ultilization------------------------------------------------------------
 
 comos <- c("ANEMIA",
            "CHF",
            "DM",
-           "HTN",
-           "CVD_HOSP",
-           "INF_HOSP"
+           "HTN"
            )
+
+utils <- c("ED",
+           "CVD_HOSP",
+           "INF_HOSP")
 # data reshape for ggplot -------------------------------------------------
 
 
@@ -34,7 +36,7 @@ plot_data <- data %>% filter(year == 2013) %>%
        pedsCKD_prop = extract_prop(pedsCKD)) %>%
   select(var,ends_with("_prop")) %>%
   filter(var %in% comos)
-  write_csv(path = "data/results/comos2013.csv")
+ # write_csv(path = "data/results/comos2013.csv")
 
 
 # make barplot adult ------------------------------------------------------------
