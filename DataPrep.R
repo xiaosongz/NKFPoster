@@ -1,21 +1,40 @@
 library(tidyverse)
 library(stringr)
+
+# static vars -------------------------------------------------------------
+
+# define comos and ultilization------------------------------------------------------------
+
+comos <- c("ANEMIA",
+           "CHF",
+           "DM",
+           "HTN"
+)
+
+utils <- c("ED",
+           "CVD_HOSP",
+           "INF_HOSP")
+
+
+# function to prepare data ------------------------------------------------
+
+
 dataprep <- function(year) {
   data <- read_csv(paste0("data/results/",year,"/MainByAgeCKD.csv"))
   data <- data %>% rename(var = "X1",
-                            peds = "(0,21]",
-                            adult = "(21,120]",
-                            pedsNoCKD = "(0,21]:0",
-                            pedsCKD = "(0,21]:1",
-                            adultNoCKD = "(21,120]:0",
-                            adultCKD = "(21,120]:1"
+                            peds = "[0,21)",
+                            adult = "[21,120)",
+                            pedsNoCKD = "[0,21):0",
+                            pedsCKD = "[0,21):1",
+                            adultNoCKD = "[21,120):0",
+                            adultCKD = "[21,120):1"
   ) %>%
     mutate(year = year)
   return(data)
 }
-
-# rm(data)
-# rm(out)
+data %>% select(starts_with("[")) %>% names()
+ rm(data)
+rm(out)
 for (year in seq(2007,2013)) {
   print(year)
   data <- dataprep(year = year)
@@ -35,6 +54,9 @@ for (year in seq(2007,2013)) {
   }
 
 }
+
+# get clean variable names ------------------------------------------------
+
 
 var_c <- out %>% mutate(var_a = sub("\\ =.*","",x = var)) %>% select(var_a)
 

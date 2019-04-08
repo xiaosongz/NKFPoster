@@ -23,7 +23,7 @@ linegroups <- function(thevar) {
   p + geom_line(size = 2)+
     ggthemes::theme_economist()+
     #  ggsci::scale_fill_jama()+
-    ggsci::scale_color_jama(labels = c("Adult CKD","Adult No-CKD","Peds CKD","Peds No-CKD"))+
+    ggsci::scale_color_nejm(labels = c("Adult CKD","Adult No-CKD","Peds CKD","Peds No-CKD"))+
     ylab(label = paste0(thevar,"( %)"))+
     ggtitle(paste0(thevar," trend by age group")) +
     theme(plot.title = element_text(hjust = 0.5),
@@ -37,6 +37,5 @@ linegroups <- function(thevar) {
          width = 6*1.61,
          filename = paste0("plots/",thevar,"TrendByAge_CKD.png"))
 }
-map(comos,linegroups)
-map(utils,linegroups)
+
 

@@ -47,31 +47,31 @@ plotting_df <-
   plot_data %>%
   select(var,adultNoCKD_prop,adultCKD_prop) %>%
   gather(key = "group", value = "prop",
-         adultNoCKD_prop,adultCKD_prop) %>%
+         adultNoCKD_prop,adultCKD_prop) #%>%
   # a trick!
-  mutate(prop = if_else(group == "adultNoCKD_prop", -prop, prop))
+  # mutate(prop = if_else(group == "adultNoCKD_prop", -prop, prop))
 ## find the order
-temp_df <-
-  plotting_df %>%
-  filter(group == "adultNoCKD_prop") %>%
-  arrange(prop)
-the_order <- temp_df$var
+# temp_df <-
+#   plotting_df %>%
+#   filter(group == "adultNoCKD_prop") %>%
+#   arrange(prop)
+# the_order <- temp_df$var
+
 the_order %>% print()
 # plot
 p <-
   plotting_df %>%
   ggplot(aes(x = var, y = prop, group = group, fill = group)) +
-  geom_bar(stat = "identity", width = 0.75) +
+  geom_bar(stat = "identity", position = position_dodge(), width = 0.7) +
   coord_flip() +
   scale_x_discrete(limits = rev(comos)) +
   # another trick!
-  scale_y_continuous(limits = c(-65,65),#set the lower and upper limit for x axis(flipped)
+  scale_y_continuous(limits = c(0,65),#set the lower and upper limit for x axis(flipped)
                      breaks = seq(-100, 100, 10),
                      labels = abs(seq(-100, 100, 10))) +
-  labs(x = "Comobidity", y = "% Diagnosis", title = "Adult comobidity diagnosis by CKD status")+
+  labs(x = "Comobidity", y = "% Diagnosed", title = "Adult comobidity diagnosis by CKD status")+
   ggthemes::theme_economist()+
-  ggsci::scale_fill_jama(labels = c("CKD","No-CKD"))+
-  #scale_fill_discrete(labels = c("A","B"))+
+  ggsci::scale_fill_nejm(labels = c("CKD","No-CKD"))+
   theme(legend.position = "top",
         legend.title = element_blank(),
         legend.text = element_text(),
