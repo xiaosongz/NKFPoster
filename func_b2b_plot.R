@@ -1,3 +1,28 @@
+# This is a function to map sets of back to back bar plots for PAS/NKF abstract/poster
+# COMO comparision by CKD and Age
+
+# source data prep code ---------------------------------------------------
+
+source("DataPrep.R")
+
+# load packages -----------------------------------------------------------
+
+library(tidyverse)
+library(ggplot2)
+library(ggthemes)
+library(ggsci)
+
+# define comos and ultilization------------------------------------------------------------
+
+comos <- c("ANEMIA",
+           "CHF",
+           "DM",
+           "HTN"
+)
+
+utils <- c("ED",
+           "CVD_HOSP",
+           "INF_HOSP")
 
 vars = utils
 thisyear = 2012
@@ -26,6 +51,8 @@ b2b_age_ckd <- function(thisyear,vars,name) {
            adultNoCKD_prop,adultCKD_prop) %>%
     # a trick!
     mutate(prop = if_else(group == "adultNoCKD_prop", -prop, prop))
+  # create dynamic lower and upper limit based on ploting data
+  axis_limit <- max(plotting_df$prop) + 5;axis_limit
   ## find the order
   temp_df <-
     plotting_df %>%
@@ -39,7 +66,7 @@ b2b_age_ckd <- function(thisyear,vars,name) {
     coord_flip() +
     scale_x_discrete(limits = rev(vars)) +
     # another trick!
-    scale_y_continuous(limits = c(-65,65),#set the lower and upper limit for x axis(flipped)
+    scale_y_continuous(limits = c(-axis_limit,axis_limit),#set the lower and upper limit for x axis(flipped)
                        breaks = seq(-100, 100, 10),
                        labels = abs(seq(-100, 100, 10))) +
     labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear,"Adult ",name, " diagnosis by CKD status"))+
@@ -65,6 +92,7 @@ b2b_age_ckd <- function(thisyear,vars,name) {
   ggsave(height = 6,
          width = 6*1.6,
          filename = paste0("plots/",thisyear,"adult",name,"byCKD.png"))
+
   # make barplot peds ------------------------------------------------------------
   plotting_df <-
     plot_data %>%
@@ -73,6 +101,8 @@ b2b_age_ckd <- function(thisyear,vars,name) {
            pedsNoCKD_prop,pedsCKD_prop) %>%
     # a trick!
     mutate(prop = if_else(group == "pedsNoCKD_prop", -prop, prop))
+  # create dynamic lower and upper limit based on ploting data
+  axis_limit <- max(plotting_df$prop) + 5;axis_limit
   ## find the order
   temp_df <-
     plotting_df %>%
@@ -86,10 +116,10 @@ b2b_age_ckd <- function(thisyear,vars,name) {
     coord_flip() +
     scale_x_discrete(limits = rev(vars)) +
     # another trick!
-    scale_y_continuous(limits = c(-70,70),#set the lower and upper limit for x axis(flipped)
+    scale_y_continuous(limits = c(-axis_limit,axis_limit),#set the lower and upper limit for x axis(flipped)
                        breaks = seq(-100, 100, 10),
                        labels = abs(seq(-100, 100, 10))) +
-    labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear,"peds ",name, " diagnosis by CKD status")) +
+    labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear," Pediatric ",name, " diagnosis by CKD status")) +
     ggthemes::theme_economist() +
     ggsci::scale_fill_jama(labels = c("CKD","No-CKD")) +
     theme(legend.position = "top",
@@ -112,24 +142,12 @@ b2b_age_ckd <- function(thisyear,vars,name) {
 }
 
 
-# define comos and ultilization------------------------------------------------------------
 
-comos <- c("ANEMIA",
-           "CHF",
-           "DM",
-           "HTN"
-)
-
-utils <- c("ED",
-           "CVD_HOSP",
-           "INF_HOSP")
-
-library(tidyverse)
 b2b_age_ckd(2013,comos,"comos")
 years <- seq(2007,2013)
 
 map(years,b2b_age_ckd(..,vars = comos,name = "comos"))
 for (year in years) {
-  #b2b_age_ckd(year,vars = comos,name = "comos")
+  b2b_age_ckd(year,vars = comos,name = "comos")
   b2b_age_ckd(year,vars = utils,name = "utilization")
 }
