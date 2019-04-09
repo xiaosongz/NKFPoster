@@ -32,9 +32,6 @@ dataprep <- function(year) {
     mutate(year = year)
   return(data)
 }
-data %>% select(starts_with("[")) %>% names()
- rm(data)
-rm(out)
 for (year in seq(2007,2013)) {
   print(year)
   data <- dataprep(year = year)

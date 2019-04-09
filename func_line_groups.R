@@ -28,14 +28,15 @@ linegroups <- function(thevar) {
     ggtitle(paste0(thevar," trend by age group")) +
     theme(plot.title = element_text(hjust = 0.5),
           legend.position = "right")+
-    scale_fill_discrete(name = "Patient group")
+    scale_fill_discrete(name = "Patient group") +
+    theme(legend.title=element_blank())
 
   ggsave(height = 6,
          width = 6*1.61,
-         filename = paste0("plots/",thevar,"TrendByAge_CKD.pdf"))
+         filename = paste0("plots/trends/",thevar,"TrendByAge_CKD.pdf"))
   ggsave(height = 6,
          width = 6*1.61,
-         filename = paste0("plots/",thevar,"TrendByAge_CKD.png"))
+         filename = paste0("plots/trends/",thevar,"TrendByAge_CKD.png"))
 }
 
 

@@ -9,7 +9,7 @@ library(ggthemes)
 library(ggsci)
 
 
-b2b_age_ckd <- function(thisyear,vars,name) {
+grpbar_age_ckd <- function(thisyear,vars,name) {
   # data reshape for ggplot -------------------------------------------------
 
   plot_data <- data %>% filter(year == thisyear) %>%
@@ -30,9 +30,8 @@ b2b_age_ckd <- function(thisyear,vars,name) {
     plot_data %>%
     select(var,adultNoCKD_prop,adultCKD_prop) %>%
     gather(key = "group", value = "prop",
-           adultNoCKD_prop,adultCKD_prop) %>%
+           adultNoCKD_prop,adultCKD_prop)
     # a trick!
-    mutate(prop = if_else(group == "adultNoCKD_prop", -prop, prop))
   # create dynamic lower and upper limit based on ploting data
   axis_limit <- max(plotting_df$prop)*1.1;axis_limit
   ## find the order
@@ -44,11 +43,13 @@ b2b_age_ckd <- function(thisyear,vars,name) {
   p <-
     plotting_df %>%
     ggplot(aes(x = var, y = prop, group = group, fill = group)) +
-    geom_bar(stat = "identity", width = 0.7) +
+    geom_bar(stat = "identity",
+             position = position_dodge(),# make it dodged bar plot
+             width = 0.7) +
     coord_flip() +
     scale_x_discrete(limits = rev(vars)) +
     # another trick!
-    scale_y_continuous(limits = c(-axis_limit,axis_limit),#set the lower and upper limit for x axis(flipped)
+    scale_y_continuous(limits = c(0,axis_limit),#set the lower and upper limit for x axis(flipped)
                        breaks = seq(-100, 100, 10),
                        labels = abs(seq(-100, 100, 10))) +
     labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear,"Adult ",name, " diagnosis by CKD status"))+
@@ -69,22 +70,20 @@ b2b_age_ckd <- function(thisyear,vars,name) {
 
   ggsave(height = 6,
          width = 6*1.6,
-         filename = paste0("plots/b2b_bars/",thisyear,"adult",name,"byCKD.pdf"))
+         filename = paste0("plots/grp_bars/",thisyear,"adult",name,"byCKD.pdf"))
 
   ggsave(height = 6,
          width = 6*1.6,
-         filename = paste0("plots/b2b_bars/",thisyear,"adult",name,"byCKD.png"))
+         filename = paste0("plots/grp_bars/",thisyear,"adult",name,"byCKD.png"))
 
   # make barplot peds ------------------------------------------------------------
   plotting_df <-
     plot_data %>%
     select(var,pedsNoCKD_prop,pedsCKD_prop) %>%
     gather(key = "group", value = "prop",
-           pedsNoCKD_prop,pedsCKD_prop) %>%
-    # a trick!
-    mutate(prop = if_else(group == "pedsNoCKD_prop", -prop, prop))
+           pedsNoCKD_prop,pedsCKD_prop)
   # create dynamic lower and upper limit based on ploting data
-  axis_limit <- max(plotting_df$prop) 1.1;axis_limit
+  axis_limit <- max(plotting_df$prop) *1.1;axis_limit
   ## find the order
   temp_df <-
     plotting_df %>%
@@ -94,11 +93,13 @@ b2b_age_ckd <- function(thisyear,vars,name) {
   p <-
     plotting_df %>%
     ggplot(aes(x = var, y = prop, group = group, fill = group)) +
-    geom_bar(stat = "identity", width = 0.7) +
+    geom_bar(stat = "identity",
+             position = position_dodge(),
+             width = 0.7) +
     coord_flip() +
     scale_x_discrete(limits = rev(vars)) +
     # another trick!
-    scale_y_continuous(limits = c(-axis_limit,axis_limit),#set the lower and upper limit for x axis(flipped)
+    scale_y_continuous(limits = c(0,axis_limit),#set the lower and upper limit for x axis(flipped)
                        breaks = seq(-100, 100, 10),
                        labels = abs(seq(-100, 100, 10))) +
     labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear," Pediatric ",name, " diagnosis by CKD status")) +
@@ -117,10 +118,10 @@ b2b_age_ckd <- function(thisyear,vars,name) {
 
   ggsave(height = 6,
          width = 6*1.61,
-         filename = paste0("plots/b2b_bars/",thisyear,"peds",name,"byCKD.pdf"))
+         filename = paste0("plots/grp_bars/",thisyear,"peds",name,"byCKD.pdf"))
   ggsave(height = 6,
          width = 6*1.61,
-         filename = paste0("plots/b2b_bars/",thisyear,"peds",name,"byCKD.png"))
+         filename = paste0("plots/grp_bars/",thisyear,"peds",name,"byCKD.png"))
 }
 
 
