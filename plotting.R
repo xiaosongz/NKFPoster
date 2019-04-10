@@ -16,7 +16,7 @@ purrr::map(utils,linegroups)
 # maps --------------------------------------------------------------------
 
 source("CKDmap.R")
-list <- c("anemia", "dm" ,      "htn" ,     "ed" ,      "cvd_hosp", "inf_hosp")
+list <- c("anemia", "dm" ,      "htn" ,     "ed" ,      "cvd_hosp", "inf_hosp","ckd")
 
 
 
