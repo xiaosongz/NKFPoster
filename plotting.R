@@ -9,9 +9,15 @@ source("DataPrep.R")
 
 library(ggplot2)
 library(purrr)
+# overall cohort
 source("func_line_groups.R")
 purrr::map(comos,linegroups)
 purrr::map(utils,linegroups)
+# peds cohort
+source("Datapeds.R")
+purrr::map(comos,ped_linegroups)
+purrr::map(utils,ped_linegroups)
+
 
 # maps --------------------------------------------------------------------
 
@@ -22,7 +28,8 @@ list <- c("anemia", "dm" ,      "htn" ,     "ed" ,      "cvd_hosp", "inf_hosp","
 
   for (co in list) {
     for (yr in seq(2007,2013)) {
-    map_by_state(state = "michigan", como = co,yr)
+    #map_by_state(state = "michigan", como = co,yr)
+      map_by_cty(state = "michigan", como = co,yr)
   }
 
 }
