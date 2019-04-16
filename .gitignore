@@ -5,7 +5,8 @@
 # mac ds_store
 
 *.DS_Store
-
+# avoid stage plots/
+plots/
 # Session Data files
 .RData
 
