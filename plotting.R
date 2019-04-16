@@ -22,7 +22,7 @@ purrr::map(utils,ped_linegroups)
 # maps --------------------------------------------------------------------
 
 source("CKDmap.R")
-list <- c("anemia", "dm" ,      "htn" ,     "ed" ,      "cvd_hosp", "inf_hosp","ckd")
+list <- c("anemia", "dm", "htn", "ed", "cvd_hosp", "inf_hosp", "ckd")
 
 
 
@@ -57,6 +57,6 @@ years <- seq(2007,2013)
 
 # years %>% purrr::map(b2b_age_ckd(thisyear= .,vars = comos,name = "comos"))
 for (year in years) {
-  grpbar_age_ckd(year,vars = comos,name = "comos")
-  grpbar_age_ckd(year,vars = utils,name = "utilization")
+  grpbar_age_ckd(year, vars = comos, name = "comos")
+  grpbar_age_ckd(year, vars = utils, name = "utilization")
 }
