@@ -15,8 +15,9 @@ purrr::map(comos,linegroups)
 purrr::map(utils,linegroups)
 # peds cohort
 source("Datapeds.R")
-purrr::map(comos,ped_linegroups)
-purrr::map(utils,ped_linegroups)
+source("func_peds_line_groups.R")
+purrr::map(comos,peds_linegroups)
+purrr::map(utils,peds_linegroups)
 
 
 # maps --------------------------------------------------------------------
