@@ -78,3 +78,10 @@ extract_prop <- function(combined) {
   prop = as.numeric(prop_text)
   return(prop)
 }
+
+ext_n <- function(combined) {
+  n_text = gsub("(\\d +)\\((.*?)\\)","\\1", x = combined)
+  n = as.numeric(n_text)
+  return(n)
+}
+
