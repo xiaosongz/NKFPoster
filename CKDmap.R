@@ -4,7 +4,7 @@ library(ggplot2)
 library(maps)
 library(viridis)
 
-prevbyzip <- read_csv("data/results/prevbyzip.csv") %>% select(-ZIP)
+prevbyzip <- read_csv("data/results/prevby.csv") %>% select(-ZIP)
 prevbyzip$zip <- clean.zipcodes(prevbyzip$Zipcode)
 names(prevbyzip) <- names(prevbyzip) %>% tolower()
 
