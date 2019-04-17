@@ -53,7 +53,7 @@ grpbar_age_ckd <- function(thisyear,vars,name) {
                        breaks = seq(-100, 100, 10),
                        labels = abs(seq(-100, 100, 10))) +
     labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear,"Adult ",name, " diagnosis by CKD status"))+
-    ggthemes::theme_economist()+
+    ggthemes::theme_tufte()+
     ggsci::scale_fill_nejm(labels = c("CKD","No-CKD"))+
     #scale_fill_discrete(labels = c("A","B"))+
     theme(legend.position = "top",
@@ -70,11 +70,11 @@ grpbar_age_ckd <- function(thisyear,vars,name) {
 
   ggsave(height = 6,
          width = 6*1.6,
-         filename = paste0("plots/grp_bars/",thisyear,"adult",name,"byCKD.pdf"))
+         filename = paste0("plots/grp_bars/pdf/",thisyear,"adult",name,"byCKD.pdf"))
 
   ggsave(height = 6,
          width = 6*1.6,
-         filename = paste0("plots/grp_bars/",thisyear,"adult",name,"byCKD.png"))
+         filename = paste0("plots/grp_bars/png/",thisyear,"adult",name,"byCKD.png"))
 
   # make barplot peds ------------------------------------------------------------
   plotting_df <-
@@ -103,7 +103,7 @@ grpbar_age_ckd <- function(thisyear,vars,name) {
                        breaks = seq(-100, 100, 10),
                        labels = abs(seq(-100, 100, 10))) +
     labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear," Pediatric ",name, " diagnosis by CKD status")) +
-    ggthemes::theme_economist() +
+    ggthemes::theme_tufte() +
     ggsci::scale_fill_nejm(labels = c("CKD","No-CKD")) +
     theme(legend.position = "top",
           legend.title = element_blank(),
@@ -118,10 +118,10 @@ grpbar_age_ckd <- function(thisyear,vars,name) {
 
   ggsave(height = 6,
          width = 6*1.61,
-         filename = paste0("plots/grp_bars/",thisyear,"peds",name,"byCKD.pdf"))
+         filename = paste0("plots/grp_bars/pdf/",thisyear,"peds",name,"byCKD.pdf"))
   ggsave(height = 6,
          width = 6*1.61,
-         filename = paste0("plots/grp_bars/",thisyear,"peds",name,"byCKD.png"))
+         filename = paste0("plots/grp_bars/png/",thisyear,"peds",name,"byCKD.png"))
 }
 
 

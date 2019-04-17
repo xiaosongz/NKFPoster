@@ -11,24 +11,26 @@ library(ggplot2)
 library(purrr)
 # overall cohort
 source("func_line_groups.R")
-purrr::map(comos,linegroups)
-purrr::map(utils,linegroups)
+purrr::map(c("CKD"),linegroups_age)
+purrr::map(comos,linegroups_age)
+purrr::map(utils,linegroups_age)
+purrr::map(comos,linegroups_age_CKD)
+purrr::map(utils,linegroups_age_CKD)
 # peds cohort
 source("Datapeds.R")
-source("func_peds_line_groups.R")
-purrr::map(comos,peds_linegroups)
-purrr::map(utils,peds_linegroups)
-
+purrr::map(comos,peds_linegroups_byage)
+purrr::map(utils,peds_linegroups_byage)
+purrr::map(c("CKD"),peds_linegroups_byage)
 
 # maps --------------------------------------------------------------------
 
-source("CKDmap.R")
-list <- c("anemia", "dm", "htn", "ed", "cvd_hosp", "inf_hosp", "ckd")
+source("CKDmap_bycty.R")
+list <- c("anemia", "dm", "htn", "ed",  "ckd")
 
 
 
   for (co in list) {
-    for (yr in seq(2007,2013)) {
+    for (yr in seq(2013,2013)) {
     #map_by_state(state = "michigan", como = co,yr)
       map_by_cty(state = "michigan", como = co,yr)
   }

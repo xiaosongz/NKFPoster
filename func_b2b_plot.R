@@ -52,7 +52,7 @@ b2b_age_ckd <- function(thisyear,vars,name) {
                        breaks = seq(-100, 100, 10),
                        labels = abs(seq(-100, 100, 10))) +
     labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear,"Adult ",name, " diagnosis by CKD status"))+
-    ggthemes::theme_economist()+
+    ggthemes::theme_tufte()+
     ggsci::scale_fill_nejm(labels = c("CKD","No-CKD"))+
     #scale_fill_discrete(labels = c("A","B"))+
     theme(legend.position = "top",
@@ -84,7 +84,7 @@ b2b_age_ckd <- function(thisyear,vars,name) {
     # a trick!
     mutate(prop = if_else(group == "pedsNoCKD_prop", -prop, prop))
   # create dynamic lower and upper limit based on ploting data
-  axis_limit <- max(plotting_df$prop) 1.1;axis_limit
+  axis_limit <- max(plotting_df$prop)*1.1;axis_limit
   ## find the order
   temp_df <-
     plotting_df %>%
@@ -102,7 +102,7 @@ b2b_age_ckd <- function(thisyear,vars,name) {
                        breaks = seq(-100, 100, 10),
                        labels = abs(seq(-100, 100, 10))) +
     labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear," Pediatric ",name, " diagnosis by CKD status")) +
-    ggthemes::theme_economist() +
+    ggthemes::theme_tufte() +
     ggsci::scale_fill_nejm(labels = c("CKD","No-CKD")) +
     theme(legend.position = "top",
           legend.title = element_blank(),
