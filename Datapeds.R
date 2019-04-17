@@ -22,6 +22,8 @@ utils <- c("ED",
 dataprep <- function(year) {
   data <- read_csv(paste0("data/results/",year,"/PedsMainByAgePEDCKD.csv"))
   data <- data %>% rename(var  = "X1",
+                          PEDCKD = "1",
+                          No_PEDCKD = "0",
                           age0_5 = "[0,5)",
                           age5_10 = "[5,10)",
                           age10_14 = "[10,14)",

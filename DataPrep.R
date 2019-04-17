@@ -22,12 +22,12 @@ utils <- c("ED",
 dataprep <- function(year) {
   data <- read_csv(paste0("data/results/",year,"/MainByAgeCKD.csv"))
   data <- data %>% rename(var = "X1",
-                            peds = "[0,21)",
-                            adult = "[21,120)",
-                            pedsNoCKD = "[0,21):0",
-                            pedsCKD = "[0,21):1",
-                            adultNoCKD = "[21,120):0",
-                            adultCKD = "[21,120):1"
+                            peds = "[0,22)",
+                            adult = "[22,120)",
+                            pedsNoCKD = "[0,22):0",
+                            pedsCKD = "[0,22):1",
+                            adultNoCKD = "[22,120):0",
+                            adultCKD = "[22,120):1"
   ) %>%
     mutate(year = year)
   return(data)
