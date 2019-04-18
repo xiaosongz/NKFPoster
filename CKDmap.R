@@ -17,7 +17,7 @@ data("county.map")
 data(df_pop_county)
 data(zipcode)
 
-state.name.lower <-  state.name %>% tolower()
+state_name_lower <-  state.name %>% tolower()
 map_by_state <- function(state,yr,como) {
 
   df_zip <- prevbyzip %>%filter(statecode == "MI" & year == yr) %>%

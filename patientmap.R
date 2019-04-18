@@ -7,7 +7,7 @@ library(choroplethr)
 data("county.map")
 data(df_pop_county)
 
-state.name.lower <-  state.name %>% tolower()
+state_name_lower <-  state.name %>% tolower()
 
 
 # map by county
@@ -41,6 +41,7 @@ map_by_cty <- function(state ="michigan",yr,como) {
 
 
 }
+# load pediatric data by county
 
 prevbycty_peds <- read_csv("data/results/pedsbycty.csv")
 
@@ -51,7 +52,7 @@ library(choroplethr)
 data("county.map")
 data(df_pop_county)
 
-state.name.lower <-  state.name %>% tolower()
+state_name_lower <-  state.name %>% tolower()
 
 map_by_cty_peds <- function(state ="michigan",yr,como) {
 

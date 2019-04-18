@@ -43,7 +43,10 @@ linegroups_age <- function(thevar) {
 
 linegroups_age_CKD <- function(thevar) {
   draw <- data %>% select(year,var,Overall,peds,adult,
-                          pedsNoCKD,adultNoCKD,pedsCKD,adultCKD) %>%
+                          pedsNoCKD,
+                          adultNoCKD,
+                          pedsCKD,
+                          adultCKD) %>%
     filter(var == thevar) %>%
     mutate(#overall_prop = extract_prop(Overall),
       #peds_prop = extract_prop(peds),
@@ -62,23 +65,30 @@ linegroups_age_CKD <- function(thevar) {
                   y = value,
                   group = key,
                   color = key))
-  p + geom_line(size = 2)+
-    ggthemes::theme_tufte()+
-    ggsci::scale_color_nejm(labels = c("Adult CKD","Adult No-CKD","Peds CKD","Peds No-CKD"))+
+  p + geom_line(size = 2) +
+    ggthemes::theme_tufte() +
+    ggsci::scale_color_nejm(labels = c("Adult CKD",
+    "Adult No-CKD",
+    "Peds CKD",
+    "Peds No-CKD")) +
     ylab(label = paste0(thevar,"( %)"))+
     ggtitle(paste0(thevar," trend by age group")) +
     theme(plot.title = element_text(hjust = 0.5),
           legend.position = "top")+
     scale_x_continuous(breaks = pretty(draw$year))+
     scale_fill_discrete(name = "Patient group") +
-    theme(legend.title=element_blank())
+    theme(legend.title = element_blank())
 
   ggsave(height = 6,
          width = 6*1.61,
-         filename = paste0("plots/trends/adultpdf/",thevar,"TrendByAge_CKD.pdf"))
+         filename = paste0("plots/trends/adultpdf/",
+         thevar,
+         "TrendByAge_CKD.pdf"))
   ggsave(height = 6,
          width = 6*1.61,
-         filename = paste0("plots/trends/adultpng/",thevar,"TrendByAge_CKD.png"))
+         filename = paste0("plots/trends/adultpng/",
+         thevar,
+         "TrendByAge_CKD.png"))
 }
 
 
