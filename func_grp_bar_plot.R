@@ -55,13 +55,13 @@ grpbar_age_ckd <- function(thisyear,vars,name) {
     labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear,"Adult ",name, " diagnosis by CKD status"))+
     ggthemes::theme_tufte()+
     ggsci::scale_fill_nejm(labels = c("CKD","No-CKD"))+
-    #scale_fill_discrete(labels = c("A","B"))+
-    theme(legend.position = "top",
-          legend.title = element_blank(),
-          legend.text = element_text(),
-          plot.title = element_text(hjust = 0.5),
-          #panel.background = element_rect(fill =  "grey90")
-    ) +
+    theme(
+      #plot.title = element_blank(),
+      legend.title=element_blank(),
+      legend.position = "top",
+      axis.title = element_text(family = "sans",size = 14),
+      text = element_text(family = "sans", size = 14),
+      legend.spacing.x = unit(1.0, 'cm')) +
     # reverse the order of items in legend
     guides(fill = guide_legend(reverse = TRUE))
 
@@ -75,6 +75,7 @@ grpbar_age_ckd <- function(thisyear,vars,name) {
   ggsave(height = 6,
          width = 6*1.6,
          filename = paste0("plots/grp_bars/png/",thisyear,"adult",name,"byCKD.png"))
+  create_pptx(p,path = "plots/ppt/test.pptx")
 
   # make barplot peds ------------------------------------------------------------
   plotting_df <-
@@ -105,12 +106,13 @@ grpbar_age_ckd <- function(thisyear,vars,name) {
     labs(x = "Comobidity", y = "% Diagnosis", title = paste0(thisyear," Pediatric ",name, " diagnosis by CKD status")) +
     ggthemes::theme_tufte() +
     ggsci::scale_fill_nejm(labels = c("CKD","No-CKD")) +
-    theme(legend.position = "top",
-          legend.title = element_blank(),
-          #legend.text = element_blank(),
-          plot.title = element_text(hjust = 0.5),
-          #panel.background = element_rect(fill =  "grey90")
-    ) +
+    theme(
+          #plot.title = element_blank(),
+          legend.title=element_blank(),
+          legend.position = "top",
+          axis.title = element_text(family = "sans",size = 14),
+          text = element_text(family = "sans", size = 14),
+          legend.spacing.x = unit(1.0, 'cm')) +
     # reverse the order of items in legend
     guides(fill = guide_legend(reverse = TRUE))
 
@@ -122,6 +124,7 @@ grpbar_age_ckd <- function(thisyear,vars,name) {
   ggsave(height = 6,
          width = 6*1.61,
          filename = paste0("plots/grp_bars/png/",thisyear,"peds",name,"byCKD.png"))
+  create_pptx(p,path = "plots/ppt/test.pptx")
 }
 
 

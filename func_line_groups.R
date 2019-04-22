@@ -8,7 +8,6 @@ linegroups_age <- function(thevar) {
       overall_prop = extract_prop(Overall),
       peds_prop = extract_prop(peds),
       adult_prop = extract_prop(adult)
-
     ) %>%
     select(year, ends_with("_prop")) %>%
     gather(key = "key",value = "value",
@@ -28,7 +27,12 @@ linegroups_age <- function(thevar) {
           legend.position = "top")+
     scale_x_continuous(breaks = pretty(draw$year))+
     scale_fill_discrete(name = "Patient group") +
-    theme(legend.title=element_blank())
+    theme(plot.title = element_blank(),
+          legend.title=element_blank(),
+          legend.position = "top",
+          axis.title = element_text(family = "sans",size = 14),
+          legend.text = element_text(family = "sans", size = 12),
+          text = element_text(family = "sans", size = 12))
 
   ggsave(height = 6,
          width = 6*1.61,
@@ -36,6 +40,7 @@ linegroups_age <- function(thevar) {
   ggsave(height = 6,
          width = 6*1.61,
          filename = paste0("plots/trends/adultpng/",thevar,"TrendByAgegroup.png"))
+  create_pptx(plot,path = "plots/ppt/test.pptx")
 }
 
 
@@ -106,9 +111,10 @@ peds_linegroups_byage <- function(thevar) {
     spread(key = var,value = value) %>% # spread the !!thevar and n into two columns for calculate the %
     rename(count = !!thevar,
            Year = "year") %>% # rename the !!thevar column to "count", workaound for "non-numeric argument to binary operator" problem
-    mutate(prop = ((count)/n*100)) # create new prop % variable for drawing
+    mutate(prop = ((count)/n*100),
+           key = factor(key,levels = c("age0_5", "age5_10","age10_14", "age14_18","age18_22" ),labels = c("Age 0-4", "Age 5-9", "Age 10-13", "Age 14-17", "Age 18-21"))) # create new prop % variable for drawing
 
- draw$key %>% forcats::as_factor(.,c("Age 0-5", "Age 6-10", "Age 11-13", "Age 14-18", "Age 19-22"))
+ y_limit <- ceiling(max(draw$prop))
   p <- ggplot(data = draw,
               aes(x = Year,
                   y = prop,
@@ -122,7 +128,7 @@ peds_linegroups_byage <- function(thevar) {
     ggtitle(paste0(thevar," trend by age group")) +
     scale_fill_discrete(name = "Patient group") +
     scale_x_continuous(breaks = pretty(draw$Year))+
-    scale_y_continuous(limits = c(0,ceiling(max(draw$prop))),breaks = seq(0,ceiling(max(draw$prop)),ceiling(max(draw$prop))/5)) +
+    scale_y_continuous(limits = c(0,ceiling(max(draw$prop))),breaks = seq(0,y_limit,y_limit/5)) +
     theme(plot.title = element_blank(),
           legend.title=element_blank(),
           legend.position = "top",
