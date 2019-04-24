@@ -120,7 +120,7 @@ peds_linegroups_byage <- function(thevar) {
                   y = prop,
                   group = key,
                   color = key))
-  p + geom_line(size = 2)+
+  plot <- p + geom_line(size = 2)+
     ggthemes::theme_tufte()+
     ggsci::scale_color_nejm(#labels = c("Age 0-5", "Age 6-10", "Age 11-13", "Age 14-18", "Age 19-22")
     )+
@@ -134,13 +134,15 @@ peds_linegroups_byage <- function(thevar) {
           legend.position = "top",
           axis.title = element_text(family = "sans",size = 14),
           axis.text = element_text(family = "sans", size = 12))
-
+print(plot)
   ggsave(height = 6,
          width = 6*1.61,
          filename = paste0("plots/trends/pedspdf/",thevar,"TrendBypedAge.pdf"))
   ggsave(height = 6,
          width = 6*1.61,
          filename = paste0("plots/trends/pedspng/",thevar,"TrendBypedAge.png"))
-}
+  create_pptx(plot,path = "plots/ppt/test.pptx")
+  }
+
 
 
